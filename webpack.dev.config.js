@@ -11,7 +11,7 @@ const devConfig = {
     usedExports: true
   },
   // source-map
-  devtool: 'eval-source-map',
+  devtool: 'eval-cheap-module-source-map',
   // 开发服务器
   devServer: {
     static: path.resolve(__dirname, 'dist'),

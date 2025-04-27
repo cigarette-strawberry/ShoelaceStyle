@@ -1,13 +1,12 @@
 const { merge } = require('webpack-merge'); // 插件引入
 const config = require('./webpack.config'); // 引入共用配置
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
 const prodConfig = {
   mode: 'production',
-  plugins: [new CleanWebpackPlugin(), new HtmlWebpackPlugin()],
+  plugins: [new CleanWebpackPlugin()],
   optimization: {
     minimize: true, // 启用压缩（生产模式默认 true）
     minimizer: [
