@@ -43,17 +43,11 @@ module.exports = {
         }
       },
       {
-        test: /\.(png|jpe?g|gif|svg)$/i,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 1024 * 8,
-              name: '[name].[hash:8].[ext]',
-              outputPath: 'images/'
-            }
-          }
-        ]
+        test: /\.(png|jpe?g|gif|svg|webp)$/i,
+        type: 'asset/resource', // 使用 Webpack 5 内置资源模块
+        generator: {
+          filename: 'assets/[name][ext]' // 输出路径和文件名格式
+        }
       }
     ]
   },
@@ -68,6 +62,10 @@ module.exports = {
         {
           from: path.resolve(__dirname, 'node_modules/@shoelace-style/shoelace/dist/assets'),
           to: path.resolve(__dirname, 'dist/shoelace/assets')
+        },
+        {
+          from: 'src/assets', // 源目录
+          to: 'assets' // 输出目录（相对于 output.path）
         }
       ]
     })

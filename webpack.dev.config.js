@@ -16,7 +16,7 @@ const devConfig = {
   devServer: {
     static: path.resolve(__dirname, 'dist'),
     compress: true,
-    port: 8888,
+    port: 8889,
     open: true,
     hot: true // 代码变化后，自动刷新页面 (该参数可以不用手动添加，它已经被自动应用于 HMR 插件。)
   },
