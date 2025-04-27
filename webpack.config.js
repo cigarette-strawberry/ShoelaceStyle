@@ -5,15 +5,54 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   entry: './src/index.js',
   output: {
-    filename: 'main.js',
+    publicPath: '/',
+    filename: '[name]/[name].[contenthash].bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
   module: {
     // Bundle styles into main.css
     rules: [
       {
-        test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        test: /\.(css|scss)$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  require('autoprefixer') // 启用 autoprefixer
+                ]
+              }
+            }
+          },
+          'sass-loader'
+        ]
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/, // 排除无需编译的目录
+        use: {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+            presets: ['@babel/preset-env'] // 使用预设
+          }
+        }
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 1024 * 8,
+              name: '[name].[hash:8].[ext]',
+              outputPath: 'images/'
+            }
+          }
+        ]
       }
     ]
   },
@@ -28,5 +67,10 @@ module.exports = {
         }
       ]
     })
-  ]
+  ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src')
+    }
+  }
 };
